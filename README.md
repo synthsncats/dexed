@@ -18,10 +18,10 @@ in the source folder) stays on the Apache 2.0 license to able to collaborate bet
 
 Changelog
 ---------
-#### Version 0.9.5 (in development)
+#### Version 0.9.5
 * Added support for SCL/KBM microtuning
 * Added initial support for MPE performance
-* Upgraded build system to use JUCE 4.5.7 and build from locally acquired JUCE
+* Upgraded build system to use JUCE 6.0 and build from locally acquired JUCE
 * A Collection of small UI changes, including higher contrast GUI assets, better sub-window management, 
   and mouse wheel support
 * Added VST3 support
@@ -131,6 +131,7 @@ which will expand the submodules. Then follow platform specific directions below
 This will build a VST3, and AU and a Standalone in Build/MacOSX/Release for your
 
 ## windows
+Run this in the bash shell that comes with the standard Git distribution.
 
 ```
 ./scripts/get-juce.sh
@@ -147,14 +148,10 @@ then open and build the resulting Visual Studio Solution file.
 ./scripts/build-lin.sh
 ```
 
-and you will get a JACK enabled standalone version of JUCE. 
+### VST2 Support
+Since Steinberg has discontinued the VST2 API we no longer distribute a VST2.
 
-Since Steinberg has discontinued the VST2 API we no longer distribute a VST2. On Mac and Windows we strongly recommend you
-use the provided VST3 or AU. On Linux, the situation is a little trickier, with VST3 support in hosts being uneven and juce5
-doesn't create a VST3 (although this will change in juce6). 
-
-If you
-are a licensee to the VST2SDK, though, you can build a VST2 version of DEXED yourself with these commands
+If you are a licensee to the VST2SDK, though, you can build a VST2 version of DEXED yourself with these commands
 
 ```
 ./scripts/get-juce.sh
@@ -162,5 +159,3 @@ export VST2SDK_DIR=~/path/to/vst2/sdk/dir
 ./scripts/projuce-lin-vst2.sh
 ./scripts/build-lin.sh
 ```
-
-and you will get a VST2 and Standalone as opposed to just a Standalone.

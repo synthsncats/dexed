@@ -47,11 +47,11 @@ jobs:
         imageName: 'macos-10.14'
         isMac: True
       win:
-        imageName: 'vs2017-win2016'
+        imageName: 'windows-2019'
         isWindows: True
-      #lin:
-      #  imageName: 'ubuntu-18.04'
-      #  isLinux: True
+      lin:
+        imageName: 'ubuntu-18.04'
+        isLinux: True
 
   pool:
     vmImage: $(imageName)
@@ -77,7 +77,7 @@ jobs:
       
       git submodule update --init --recursive
 
-      ./scripts/set-version.sh
+      ./scripts/set-version.sh $(version)
 
     displayName: Setup for Building
 
@@ -97,7 +97,7 @@ jobs:
 
   - task: MSBuild@1
     inputs:
-      solution: 'Builds\VisualStudio2017\Dexed.sln'
+      solution: 'Builds\VisualStudio2019\Dexed.sln'
       maximumCpuCount: true
       platform: 'x64'
       configuration: 'Release'
@@ -105,7 +105,7 @@ jobs:
     displayName: Build Windows x64
 
   - bash: |
-      cd Builds/VisualStudio2017/x64
+      cd Builds/VisualStudio2019/x64
       mkdir assets
       mv Release/Standalone\ Plugin/Dexed.exe assets/
       mv Release/VST3/Dexed.vst3 assets/
@@ -124,6 +124,7 @@ jobs:
     condition: variables.isWindows
 
   - bash: |
+      sudo apt-get update
       sudo apt-get install -y libwebkit2gtk-4.0
       sudo apt-get install -y libcurl4-openssl-dev
       sudo apt-get install -y alsa-base
@@ -169,7 +170,7 @@ jobs:
 
 - job: UpdateGithubRelease
   dependsOn: Build
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  condition: and(and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master')), eq(variables['version'], 'Nightly'))
 
   steps:
   - task: DownloadPipelineArtifact@0
@@ -182,10 +183,10 @@ jobs:
       artifactName: 'WINDOWS_BUILD'
       targetPath: $(Build.ArtifactStagingDirectory)
 
-  #- task: DownloadPipelineArtifact@0
-  #  inputs:
-  #    artifactName: 'LINUX_BUILD'
-  #    targetPath: $(Build.ArtifactStagingDirectory)
+  - task: DownloadPipelineArtifact@0
+    inputs:
+      artifactName: 'LINUX_BUILD'
+      targetPath: $(Build.ArtifactStagingDirectory)
 
   - bash: |
      scripts/release-notes.sh > $(Build.ArtifactStagingDirectory)/ReleaseNotes.md

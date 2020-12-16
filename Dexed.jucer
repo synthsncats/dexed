@@ -7,15 +7,16 @@
               pluginCode="Dexd" pluginChannelConfigs="{0, 2}" pluginIsSynth="1"
               pluginWantsMidiIn="1" pluginProducesMidiOut="1" pluginSilenceInIsSilenceOut="0"
               pluginEditorRequiresKeys="0" pluginAUExportPrefix="DexedAU" pluginRTASCategory=""
-              aaxIdentifier="com.yourcompany.Dexed" pluginAAXCategory="2" jucerVersion="5.4.7"
-              companyName="Digital Suburban" buildVST3="1" buildRTAS="0" buildAAX="0"
-              pluginManufacturerEmail="support@yourcompany.com" buildAUv3="0"
-              pluginIsMidiEffectPlugin="0" displaySplashScreen="0" reportAppUsage="0"
-              splashScreenColour="Dark" buildStandalone="1" enableIAA="0" cppLanguageStandard="latest"
-              companyCopyright="Digital Suburban" pluginFormats="buildAU,buildStandalone,buildVST3"
-              pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn,pluginProducesMidiOut">
+              aaxIdentifier="com.yourcompany.Dexed" pluginAAXCategory="2" companyName="Digital Suburban"
+              buildVST3="1" buildRTAS="0" buildAAX="0" pluginManufacturerEmail="support@yourcompany.com"
+              buildAUv3="0" pluginIsMidiEffectPlugin="0" displaySplashScreen="0"
+              reportAppUsage="0" splashScreenColour="Dark" buildStandalone="1"
+              enableIAA="0" cppLanguageStandard="latest" companyCopyright="Digital Suburban"
+              pluginFormats="buildAU,buildStandalone,buildVST3" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn,pluginProducesMidiOut"
+              jucerFormatVersion="1">
   <MAINGROUP id="kHXTgw" name="Dexed">
     <GROUP id="{F12593AE-639A-6F59-5819-ACE25AF86F95}" name="Resources">
+      <FILE id="kj2Ow6" name="dexed-logo.png" compile="0" resource="1" file="Resources/ui/dexed-logo.png"/>
       <FILE id="h1sDac" name="HelpButton.png" compile="0" resource="1" file="Resources/ui/HelpButton.png"/>
       <FILE id="oVmTCw" name="HelpButton.svg" compile="0" resource="1" file="Resources/ui/HelpButton.svg"/>
       <FILE id="pKwZj2" name="SwitchLighted_48x26.png" compile="0" resource="1"
@@ -40,7 +41,6 @@
       <FILE id="A3xTGc" name="NotoSans-Bold.ttf" compile="0" resource="1"
             file="Resources/ui/NotoSans-Bold.ttf"/>
       <FILE id="gfRTZ1" name="builtin_pgm.zip" compile="0" resource="1" file="Resources/builtin_pgm.zip"/>
-      <FILE id="xxGEA4" name="about.png" compile="0" resource="1" file="Resources/about.png"/>
       <FILE id="YdXhxj" name="GlobalEditor_864x144.png" compile="0" resource="1"
             file="Resources/ui/GlobalEditor_864x144.png"/>
       <FILE id="GAIMQD" name="OperatorEditor_287x218.png" compile="0" resource="1"
@@ -125,7 +125,8 @@
   </MAINGROUP>
   <EXPORTFORMATS>
     <LINUX_MAKE targetFolder="Builds/Linux" vstLegacyFolder="VST2SDK_DIR" smallIcon="SpSpb4"
-                bigIcon="SpSpb4" extraLinkerFlags="-fPIC" extraCompilerFlags="-I../../libs/tuning-library/include">
+                bigIcon="SpSpb4" extraLinkerFlags="-fPIC" extraCompilerFlags="-I../../libs/tuning-library/include"
+                extraDefs="JUCE_VST3_EMULATE_MIDI_CC_WITH_PARAMETERS=0">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Dexed"/>
         <CONFIGURATION name="Release" isDebug="0" optimisation="2" targetName="Dexed"/>
@@ -147,7 +148,8 @@
       </MODULEPATHS>
     </LINUX_MAKE>
     <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="SpSpb4" bigIcon="SpSpb4"
-               vst3Folder="libs/vst3sdk" extraCompilerFlags="-I../../libs/tuning-library/include -Wno-macro-redefined -Wno-deprecated-declarations -Wno-shorten-64-to-32">
+               vst3Folder="libs/vst3sdk" extraCompilerFlags="-I../../libs/tuning-library/include -Wno-macro-redefined -Wno-deprecated-declarations -Wno-shorten-64-to-32"
+               extraDefs="JUCE_VST3_EMULATE_MIDI_CC_WITH_PARAMETERS=0">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" isDebug="1" optimisation="1" targetName="Dexed"
                        osxCompatibility="10.10 SDK" osxArchitecture="64BitIntel" enablePluginBinaryCopyStep="1"/>
@@ -173,7 +175,8 @@
     </XCODE_MAC>
     <VS2017 targetFolder="Builds/VisualStudio2017" windowsTargetPlatformVersion="10.0.16299.0"
             IPPLibrary="Parallel_Static" bigIcon="SpSpb4" smallIcon="SpSpb4"
-            vst3Folder="libs/vst3sdk" extraCompilerFlags="/I../../libs/tuning-library/include">
+            vst3Folder="libs/vst3sdk" extraCompilerFlags="/I../../libs/tuning-library/include"
+            extraDefs="JUCE_VST3_EMULATE_MIDI_CC_WITH_PARAMETERS=0">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" winWarningLevel="3" generateManifest="1" winArchitecture="x64"
                        debugInformationFormat="ProgramDatabase" enablePluginBinaryCopyStep="0"
@@ -200,6 +203,35 @@
         <MODULEPATH id="surgesynthteam_tuningui" path="./libs"/>
       </MODULEPATHS>
     </VS2017>
+    <VS2019 targetFolder="Builds/VisualStudio2019" IPPLibrary="Parallel_Static"
+            extraCompilerFlags="/I../../libs/tuning-library/include" smallIcon="SpSpb4"
+            bigIcon="SpSpb4" extraDefs="JUCE_VST3_EMULATE_MIDI_CC_WITH_PARAMETERS=0">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" winWarningLevel="3" generateManifest="1" winArchitecture="x64"
+                       debugInformationFormat="ProgramDatabase" enablePluginBinaryCopyStep="0"
+                       linkTimeOptimisation="0" isDebug="1" optimisation="1" targetName="Dexed"
+                       useRuntimeLibDLL=""/>
+        <CONFIGURATION name="Release" winWarningLevel="3" generateManifest="1" winArchitecture="x64"
+                       debugInformationFormat="ProgramDatabase" enablePluginBinaryCopyStep="0"
+                       linkTimeOptimisation="1" isDebug="0" optimisation="3" targetName="Dexed"
+                       useRuntimeLibDLL="0"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_gui_extra" path="./assets/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="./assets/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="./assets/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="./assets/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="./assets/JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="./assets/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="./assets/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="./assets/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="./assets/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="./assets/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="./assets/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="./assets/JUCE/modules"/>
+        <MODULEPATH id="surgesynthteam_tuningui" path="./libs"/>
+      </MODULEPATHS>
+    </VS2019>
   </EXPORTFORMATS>
   <MODULES>
     <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
@@ -228,5 +260,6 @@
   <LIVE_SETTINGS>
     <OSX/>
     <LINUX/>
+    <WINDOWS/>
   </LIVE_SETTINGS>
 </JUCERPROJECT>
